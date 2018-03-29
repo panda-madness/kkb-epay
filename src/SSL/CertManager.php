@@ -11,9 +11,9 @@ class CertManager
 
     public function __construct(array $params)
     {
-        $this->publicKeyPath = $params['pub_key_path'];
-        $this->privateKeyPath = $params['priv_key_path'];
-        $this->privateKeyPassword = $params['priv_key_pass'] ?? false;
+        $this->publicKeyPath = $params['PUBLIC_KEY_FN'];
+        $this->privateKeyPath = $params['PRIVATE_KEY_FN'];
+        $this->privateKeyPassword = $params['PRIVATE_KEY_PASS'] ?? false;
     }
 
     public function sign($data)

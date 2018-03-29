@@ -10,8 +10,8 @@ class PaymentRequest extends AbstractRequest
         $document = new \SimpleXMLElement('<document />');
 
         $merchant = $document->addChild('merchant', null);
-        $merchant->addAttribute('cert_id', $this->params['certificate_id']);
-        $merchant->addAttribute('name', $this->params['merchant_name']);
+        $merchant->addAttribute('cert_id', $this->params['MERCHANT_CERTIFICATE_ID']);
+        $merchant->addAttribute('name', $this->params['MERCHANT_NAME']);
 
         $order = $merchant->addChild('order');
         $order->addAttribute('order_id', sprintf('%06d', $this->params['order_id']));
@@ -19,7 +19,7 @@ class PaymentRequest extends AbstractRequest
         $order->addAttribute('currency', $this->params['currency']);
 
         $department = $order->addChild('department');
-        $department->addAttribute('merchant_id', $this->params['merchant_id']);
+        $department->addAttribute('merchant_id', $this->params['MERCHANT_ID']);
         $department->addAttribute('amount', $this->params['amount']);
 
         if(isset($this->params['fields'])) {

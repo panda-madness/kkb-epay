@@ -14,12 +14,12 @@ composer require panda-madness/kkb-epay
 
 ```
 $epay = new \KkbEpay\Epay([
-    'certificate_id' => '00C182B189',
-    'merchant_name' => 'Test shop',
-    'merchant_id' => '92061101',
-    'priv_key_path' => './epay/more2/test_prv.pem',
-    'priv_key_pass' => 'nissan',
-    'pub_key_path' => './epay/more2/kkbca.pem',
+    'MERCHANT_CERTIFICATE_ID' => 'c183c6c7',
+    'MERCHANT_NAME' => 'Tele2',
+    'PRIVATE_KEY_FN' => 'resources/epay2/cert.prv',
+    'PRIVATE_KEY_PASS' => '1q2w3e4r',
+    'PUBLIC_KEY_FN' => 'resources/epay2/cert.cer',
+    'MERCHANT_ID' => '98375106',
 ]);
 
 // Основной запрос оплаты

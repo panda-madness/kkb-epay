@@ -10,7 +10,7 @@ class StatusRequest extends AbstractRequest
         $document = new \SimpleXMLElement('<document />');
 
         $merchant = $document->addChild('merchant', null);
-        $merchant->addAttribute('id', $this->params['merchant_id']);
+        $merchant->addAttribute('id', $this->params['MERCHANT_ID']);
 
         $order = $merchant->addChild('order');
         $order->addAttribute('id', sprintf('%06d', $this->params['order_id']));
