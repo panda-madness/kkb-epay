@@ -12,7 +12,7 @@ composer require panda-madness/kkb-epay
 
 ## Использование
 
-```
+```php
 $epay = new \KkbEpay\Epay([
     'MERCHANT_CERTIFICATE_ID' => 'c183c6c7',
     'MERCHANT_NAME' => 'Tele2',
