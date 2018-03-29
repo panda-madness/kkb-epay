@@ -10,9 +10,10 @@ class RequestFactory
     /**
      * @param string $type
      * @param array $params
-     * @return \Epay\Requests\RequestInterface
+     * @param \Epay\SSL\CertManager $signer
+     * @return \Epay\Requests\AbstractRequest
      */
-    public static function create(string $type, array $params, CertManager $signer) : RequestInterface {
+    public static function create(string $type, array $params, CertManager $signer) : AbstractRequest {
         $request = false;
 
         switch ($type) {

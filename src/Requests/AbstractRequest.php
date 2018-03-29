@@ -7,7 +7,11 @@ use Epay\SSL\CertManager;
 
 abstract class AbstractRequest
 {
+    /** @var array $params */
     protected $params;
+
+    /** @var \SimpleXMLElement $xml */
+    protected $xml;
 
     /**
      * @var \Epay\SSL\CertManager $certManager
@@ -18,18 +22,23 @@ abstract class AbstractRequest
     {
         $this->params = $params;
         $this->certManager = $certManager;
+        $this->xml = $this->buildXML();
     }
 
-    protected function formatAndSignXml(\SimpleXMLElement $document, bool $appendCertId = false)
+    public function getXML() {
+        $this->signXML();
+        return preg_replace('/^.+\n/', '', $this->xml->saveXML());
+    }
+
+    private function signXML()
     {
-        $merchant = $document->xpath('/document/merchant')[0];
-        $merchantSign = $document->addChild('merchant_sign', $this->certManager->sign($merchant->saveXML()));
+        $merchant = $this->xml->xpath('/document/merchant')[0];
+
+        $merchantSign = $this->xml->addChild('merchant_sign', $this->certManager->sign($merchant->saveXML()));
+
         $merchantSign->addAttribute('type', 'RSA');
-
-        if($appendCertId) {
-            $merchantSign->addAttribute('cert_id', $this->params['certificate_id']);
-        }
-
-        return preg_replace('/^.+\n/', '', $document->saveXML());
+        $merchantSign->addAttribute('cert_id', $this->params['certificate_id']);
     }
+
+    abstract public function buildXML();
 }

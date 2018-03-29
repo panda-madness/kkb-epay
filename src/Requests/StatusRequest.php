@@ -3,9 +3,9 @@
 namespace Epay\Requests;
 
 
-class StatusRequest extends AbstractRequest implements RequestInterface
+class StatusRequest extends AbstractRequest
 {
-    public function xml()
+    public function buildXML()
     {
         $document = new \SimpleXMLElement('<document />');
 
@@ -15,6 +15,6 @@ class StatusRequest extends AbstractRequest implements RequestInterface
         $order = $merchant->addChild('order');
         $order->addAttribute('id', sprintf('%06d', $this->params['order_id']));
 
-        return $this->formatAndSignXml($document, true);
+        return $document;
     }
 }

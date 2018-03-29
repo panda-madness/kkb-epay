@@ -7,49 +7,41 @@ use Epay\SSL\CertManager;
 
 abstract class AbstractResponse
 {
+    /** @var \Epay\SSL\CertManager $certManager */
     protected $certManager;
 
+    /** @var \SimpleXMLElement $xml */
     protected $xml;
 
-    private $properties = [];
+    /** @var array $props */
+    protected $props = [];
+
+    protected $merchantPath = '';
+    protected $merchantSignPath = '';
 
     public function __construct(string $body, CertManager $certManager)
     {
         $this->xml = new \SimpleXMLElement($body);
         $this->certManager = $certManager;
 
+        $this->props = $this->fillProps($this->xml);
+    }
+
+    public function verify()
+    {
         $signature = strrev(
-            base64_decode((string)$this->xml->xpath('/document/bank/merchant_sign')[0])
+            base64_decode((string)$this->xml->xpath($this->merchantSignPath)[0])
         );
 
-        $data = $this->xml->xpath('/document/bank/merchant')[0]->saveXML();
+        $data = $this->xml->xpath($this->merchantPath)[0]->saveXML();
 
-        $res = $this->certManager->verify($data, $signature);
-    }
-
-    public function __get($name)
-    {
-        if(array_key_exists($name, $this->properties)) {
-            return $this->properties[$name];
-        }
-
-        throw new \InvalidArgumentException('No such property on this response');
-    }
-
-    public function __set($name, $value)
-    {
-        $this->properties[$name] = $value;
-
-        return null;
-    }
-
-    public function __isset($name)
-    {
-        return isset($this->properties[$name]);
-    }
-
-    private function verify($data, $signature)
-    {
         return $this->certManager->verify($data, $signature);
+    }
+
+    abstract protected function fillProps(\SimpleXMLElement $sxi);
+
+    public function getProps()
+    {
+        return $this->props;
     }
 }

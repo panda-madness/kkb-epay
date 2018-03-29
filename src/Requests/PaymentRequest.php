@@ -3,9 +3,9 @@
 namespace Epay\Requests;
 
 
-class PaymentRequest extends AbstractRequest implements RequestInterface
+class PaymentRequest extends AbstractRequest
 {
-    public function xml()
+    public function buildXML()
     {
         $document = new \SimpleXMLElement('<document />');
 
@@ -28,6 +28,6 @@ class PaymentRequest extends AbstractRequest implements RequestInterface
             }
         }
 
-        return base64_encode($this->formatAndSignXml($document));
+        return $document;
     }
 }
