@@ -4,6 +4,8 @@
 
 ## Установка
 
+Необходимо расширение php_xml.
+
 ```
 composer require panda-madness/kkb-epay
 ```
@@ -35,12 +37,15 @@ $request = $epay->buildRequest('payment', [
 // Статус платежа
 $request = $epay->buildRequest('status', ['order_id' => 1234])->getXML();
 
+//Обработка ответов Epay
+$response = $epay->parseResponse('payment', $_POST['response']); // $_POST только для примера, не делайте так в реальной жизни
+
 $client = new GuzzleHttp\Client();
 $resp = $client->get('https://testpay.kkb.kz/jsp/remote/checkOrdern.jsp?' . urlencode($request));
 
-$response = $epay->parseResponse('payment', $resp->getBody()->getContent());
-// $response = $epay->parseResponse('status', $resp->getBody()->getContent());
+$response = $epay->parseResponse('status', $resp->getBody()->getContent());
 
+//verify() проверяет подпись ответа.
 if($response->verify()) {
     print_r($response->getProps());
     // getProps возвращает массив с параметрами ответа
