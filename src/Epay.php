@@ -1,11 +1,11 @@
 <?php
 
-namespace Epay;
+namespace KkbEpay;
 
 
-use Epay\Requests\RequestFactory;
-use Epay\Responses\ResponseFactory;
-use Epay\SSL\CertManager;
+use KkbEpay\Requests\RequestFactory;
+use KkbEpay\Responses\ResponseFactory;
+use KkbEpay\SSL\CertManager;
 
 class Epay
 {

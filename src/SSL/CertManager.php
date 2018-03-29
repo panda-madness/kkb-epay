@@ -1,6 +1,6 @@
 <?php
 
-namespace Epay\SSL;
+namespace KkbEpay\SSL;
 
 
 class CertManager

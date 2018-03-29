@@ -1,6 +1,6 @@
 <?php
 
-namespace Epay\Responses;
+namespace KkbEpay\Responses;
 
 
 class PaymentResponse extends AbstractResponse

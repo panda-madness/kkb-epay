@@ -1,6 +1,6 @@
 <?php
 
-namespace Epay\Requests;
+namespace KkbEpay\Requests;
 
 
 class StatusRequest extends AbstractRequest

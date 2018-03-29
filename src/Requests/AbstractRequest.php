@@ -1,9 +1,9 @@
 <?php
 
-namespace Epay\Requests;
+namespace KkbEpay\Requests;
 
 
-use Epay\SSL\CertManager;
+use KkbEpay\SSL\CertManager;
 
 abstract class AbstractRequest
 {
@@ -14,7 +14,7 @@ abstract class AbstractRequest
     protected $xml;
 
     /**
-     * @var \Epay\SSL\CertManager $certManager
+     * @var \KkbEpay\SSL\CertManager $certManager
      */
     protected $certManager;
 

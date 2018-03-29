@@ -1,17 +1,17 @@
 <?php
 
-namespace Epay\Requests;
+namespace KkbEpay\Requests;
 
 
-use Epay\SSL\CertManager;
+use KkbEpay\SSL\CertManager;
 
 class RequestFactory
 {
     /**
      * @param string $type
      * @param array $params
-     * @param \Epay\SSL\CertManager $signer
-     * @return \Epay\Requests\AbstractRequest
+     * @param \KkbEpay\SSL\CertManager $signer
+     * @return \KkbEpay\Requests\AbstractRequest
      */
     public static function create(string $type, array $params, CertManager $signer) : AbstractRequest {
         $request = false;

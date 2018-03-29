@@ -1,19 +1,19 @@
 <?php
 
-namespace Epay\Responses;
+namespace KkbEpay\Responses;
 
 
-use Epay\Requests\PaymentRequest;
-use Epay\Responses\StatusResponse;
-use Epay\SSL\CertManager;
+use KkbEpay\Requests\PaymentRequest;
+use KkbEpay\Responses\StatusResponse;
+use KkbEpay\SSL\CertManager;
 
 class ResponseFactory
 {
     /**
      * @param string $type
      * @param $body
-     * @param \Epay\SSL\CertManager $signer
-     * @return \Epay\Responses\AbstractResponse
+     * @param \KkbEpay\SSL\CertManager $signer
+     * @return \KkbEpay\Responses\AbstractResponse
      */
     public static function create(string $type, $body, CertManager $signer) : AbstractResponse {
         $request = false;

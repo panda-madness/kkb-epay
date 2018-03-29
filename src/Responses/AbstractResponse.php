@@ -1,13 +1,13 @@
 <?php
 
-namespace Epay\Responses;
+namespace KkbEpay\Responses;
 
 
-use Epay\SSL\CertManager;
+use KkbEpay\SSL\CertManager;
 
 abstract class AbstractResponse
 {
-    /** @var \Epay\SSL\CertManager $certManager */
+    /** @var \KkbEpay\SSL\CertManager $certManager */
     protected $certManager;
 
     /** @var \SimpleXMLElement $xml */
