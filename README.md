@@ -13,7 +13,7 @@ composer require panda-madness/kkb-epay
 ## Использование
 
 ```
-$epay = new \Epay\Epay([
+$epay = new \KkbEpay\Epay([
     'certificate_id' => '00C182B189',
     'merchant_name' => 'Test shop',
     'merchant_id' => '92061101',
