@@ -22,7 +22,7 @@ $epay = new \KkbEpay\Epay([
     'MERCHANT_ID' => '98375106',
 ]);
 
-// Основной запрос оплаты
+// Основной запрос оплаты (Signed_Order_B64)
 $request = $epay->buildRequest('payment', [
     'order_id' => 1234,
     'amount' => 1000,
