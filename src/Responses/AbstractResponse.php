@@ -16,7 +16,10 @@ abstract class AbstractResponse
     /** @var array $props */
     protected $props = [];
 
+    /** @var string $merchantPath */
     protected $merchantPath = '';
+
+    /** @var string $merchantSignPath */
     protected $merchantSignPath = '';
 
     public function __construct(string $body, CertManager $certManager)
@@ -27,6 +30,15 @@ abstract class AbstractResponse
         $this->props = $this->fillProps($this->xml);
     }
 
+    /**
+     * @param \SimpleXMLElement $xml
+     * @return mixed
+     */
+    abstract protected function parse(\SimpleXMLElement $xml);
+
+    /**
+     * @return int
+     */
     public function verify()
     {
         $signature = strrev(
@@ -38,9 +50,10 @@ abstract class AbstractResponse
         return $this->certManager->verify($data, $signature);
     }
 
-    abstract protected function fillProps(\SimpleXMLElement $sxi);
-
-    public function getProps()
+    /**
+     * @return array
+     */
+    public function get()
     {
         return $this->props;
     }

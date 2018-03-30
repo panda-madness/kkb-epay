@@ -30,4 +30,12 @@ class PaymentRequest extends AbstractRequest
 
         return $document;
     }
+
+    public function getXML()
+    {
+        $this->signXML();
+        $xml = preg_replace('/^.+\n/', '', $this->xml->saveXML());
+
+        return base64_encode($xml);
+    }
 }

@@ -30,7 +30,7 @@ abstract class AbstractRequest
         return preg_replace('/^.+\n/', '', $this->xml->saveXML());
     }
 
-    private function signXML()
+    protected function signXML()
     {
         $merchant = $this->xml->xpath('/document/merchant')[0];
 

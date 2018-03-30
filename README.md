@@ -27,28 +27,45 @@ $request = $epay->buildRequest('payment', [
     'order_id' => 1234,
     'amount' => 1000,
     'currency' => 398,
-    fields => [
+    'fields' => [
         'RL' => 1234567,
         'abonent_id' => 1234567,
         ...
     ]
-])->getXML();
+]);
 
 // Статус платежа
-$request = $epay->buildRequest('status', ['order_id' => 1234])->getXML();
-
+$request = $epay->buildRequest('status', ['order_id' => 1234]);
+```
+```php
 //Обработка ответов Epay
-$response = $epay->parseResponse('payment', $_POST['response']); // $_POST только для примера, не делайте так в реальной жизни
 
-$client = new GuzzleHttp\Client();
-$resp = $client->get('https://testpay.kkb.kz/jsp/remote/checkOrdern.jsp?' . urlencode($request));
+// PostLink
+$response = $epay->parseResponse('payment', $_POST['response']);
 
-$response = $epay->parseResponse('status', $resp->getBody()->getContent());
+// Ответ на запрос о статусе платежа
+$curl = curl_init('https://testpay.kkb.kz/jsp/remote/checkOrdern.jsp?' . urlencode($request));
+
+curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => [
+        'Signed_Order_B64' => $request,
+        'BackLink' => 'asdads',
+        'PostLink' => 'asdads',
+        'FailurePostLink' => 'asdads',
+    ]
+));
+
+$result = curl_exec($curl);
+curl_close($curl);
+
+$response = $epay->parseResponse('status', $result);
 
 //verify() проверяет подпись ответа.
 if($response->verify()) {
-    print_r($response->getProps());
-    // getProps возвращает массив с параметрами ответа
+    print_r($response->get());
+    // get возвращает массив с параметрами ответа
 } else {
     echo 'Response not valid';
 }

@@ -20,9 +20,9 @@ class Epay
         $this->certManager = new CertManager($params);
     }
 
-    public function buildRequest(string $type, array $params): Requests\AbstractRequest
+    public function buildRequest(string $type, array $params)
     {
-        return RequestFactory::create($type, array_merge($params, $this->params), $this->certManager);
+        return RequestFactory::create($type, array_merge($params, $this->params), $this->certManager)->getXML();
     }
 
     public function parseResponse(string $type, string $body)

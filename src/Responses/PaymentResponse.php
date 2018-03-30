@@ -8,7 +8,7 @@ class PaymentResponse extends AbstractResponse
     protected $merchantPath = '/document/bank/customer/merchant';
     protected $merchantSignPath = '/document/bank/customer/merchant_sign';
 
-    protected function fillProps(\SimpleXMLElement $sxi)
+    protected function fillProps(\SimpleXMLElement $sxi) : array
     {
         $props = [];
         
