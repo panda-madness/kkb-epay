@@ -48,13 +48,6 @@ $curl = curl_init('https://testpay.kkb.kz/jsp/remote/checkOrdern.jsp?' . urlenco
 
 curl_setopt_array($curl, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_POST => 1,
-    CURLOPT_POSTFIELDS => [
-        'Signed_Order_B64' => $request,
-        'BackLink' => 'asdads',
-        'PostLink' => 'asdads',
-        'FailurePostLink' => 'asdads',
-    ]
 ));
 
 $result = curl_exec($curl);
