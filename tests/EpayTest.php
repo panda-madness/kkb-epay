@@ -47,6 +47,6 @@ class EpayTest extends \PHPUnit\Framework\TestCase
      */
     public function testParseStatusResponse(Epay $epay)
     {
-        
+
     }
 }
