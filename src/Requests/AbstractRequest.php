@@ -27,7 +27,9 @@ abstract class AbstractRequest
 
     public function getXML() {
         $this->signXML();
-        return preg_replace('/^.+\n/', '', $this->xml->saveXML());
+        return trim(
+            preg_replace('/^.+\n/', '', $this->xml->saveXML())
+        );
     }
 
     protected function signXML()
