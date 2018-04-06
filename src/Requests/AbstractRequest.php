@@ -36,7 +36,13 @@ abstract class AbstractRequest
     {
         $merchant = $this->xml->xpath('/document/merchant')[0];
 
-        $merchantSign = $this->xml->addChild('merchant_sign', $this->certManager->sign($merchant->saveXML()));
+        $signature = base64_encode(
+            strrev(
+                $this->certManager->sign($merchant->saveXML())
+            )
+        );
+
+        $merchantSign = $this->xml->addChild('merchant_sign', $signature);
 
         $merchantSign->addAttribute('type', 'RSA');
         $merchantSign->addAttribute('cert_id', $this->params['MERCHANT_CERTIFICATE_ID']);

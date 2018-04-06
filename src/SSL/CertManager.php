@@ -8,12 +8,14 @@ class CertManager
     protected $publicKeyPath;
     protected $privateKeyPath;
     protected $privateKeyPassword;
+    protected $bankKeyPath;
 
     public function __construct(array $params)
     {
         $this->publicKeyPath = $params['PUBLIC_KEY_FN'];
         $this->privateKeyPath = $params['PRIVATE_KEY_FN'];
         $this->privateKeyPassword = $params['PRIVATE_KEY_PASS'] ?? false;
+        $this->bankKeyPath = $params['BANK_KEY_FN'] ?? false;
     }
 
     public function sign($data)
@@ -24,7 +26,7 @@ class CertManager
 
         openssl_sign($data, $result, $privateKey);
 
-        return base64_encode(strrev($result));
+        return $result;
     }
 
     public function verify($data, $signature)
@@ -51,6 +53,12 @@ class CertManager
     private function loadPublicKey() {
         return openssl_pkey_get_public(
             file_get_contents($this->publicKeyPath)
+        );
+    }
+
+    private function loadBankPublicKey() {
+        return openssl_pkey_get_public(
+            file_get_contents($this->bankKeyPath)
         );
     }
 }

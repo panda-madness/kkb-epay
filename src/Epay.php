@@ -29,4 +29,9 @@ class Epay
     {
         return ResponseFactory::create($type, $body, $this->certManager);
     }
+
+    public function getConfig()
+    {
+        return $this->params;
+    }
 }

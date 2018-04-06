@@ -20,7 +20,7 @@ abstract class AbstractResponse
     protected $merchantPath = '';
 
     /** @var string $merchantSignPath */
-    protected $merchantSignPath = '';
+    protected $bankSignPath = '';
 
     public function __construct(string $body, CertManager $certManager)
     {
@@ -41,11 +41,11 @@ abstract class AbstractResponse
      */
     public function verify()
     {
-        $signature = strrev(
-            base64_decode((string)$this->xml->xpath($this->merchantSignPath)[0])
+        $data = strrev(
+            (string)$this->xml->bank_sign
         );
 
-        $data = $this->xml->xpath($this->merchantPath)[0]->saveXML();
+        $signature = sha1($this->xml->bank->saveXML());
 
         return $this->certManager->verify($data, $signature);
     }

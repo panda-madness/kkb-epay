@@ -5,8 +5,8 @@ namespace KkbEpay\Responses;
 
 class PaymentResponse extends AbstractResponse
 {
-    protected $merchantPath = '/document/bank/customer/merchant';
-    protected $merchantSignPath = '/document/bank/customer/merchant_sign';
+    protected $merchantPath = '/document/bank';
+    protected $bankSignPath = '/document/bank_sign';
 
     protected function parse(\SimpleXMLElement $sxi) : array
     {
