@@ -11,17 +11,25 @@ class PaymentResponse extends AbstractResponse
     protected function parse(\SimpleXMLElement $sxi) : array
     {
         $props = [];
+
+        $order = $this->xml->xpath('/document/bank/customer/merchant/order')[0];
         
         $result = $this->xml->xpath('/document/bank/results')[0];
 
         $payment = $result->payment;
 
-        foreach ($result->attributes() as $name => $value) {
-            $props['result'][$name] = $value;
-        }
+        $props['result'] = $this->parseAttributes($result);
+        $props['payment'] = $this->parseAttributes($payment);
+        $props['order'] = $this->parseAttributes($order);
 
-        foreach ($payment->attributes() as $name => $value) {
-            $props['payment'][$name] = $value;
+        return $props;
+    }
+
+    private function parseAttributes(\SimpleXMLElement $xml) {
+        $props = [];
+
+        foreach ($xml->attributes() as $name => $value) {
+            $props[strtolower($name)] = $value;
         }
 
         return $props;
