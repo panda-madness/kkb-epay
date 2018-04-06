@@ -27,7 +27,7 @@ abstract class AbstractResponse
         $this->xml = new \SimpleXMLElement($body);
         $this->certManager = $certManager;
 
-        $this->props = $this->fillProps($this->xml);
+        $this->props = $this->parse($this->xml);
     }
 
     /**
