@@ -19,12 +19,17 @@ class StatusResponse extends AbstractResponse
 
         $response = $this->xml->xpath('/document/bank/response')[0];
 
-        foreach ($order->attributes() as $name => $value) {
-            $props['order'][$name] = (string)$value;
-        }
+        $props['response'] = $this->parseAttributes($response);
+        $props['order'] = $this->parseAttributes($order);
 
-        foreach ($response->attributes() as $name => $value) {
-            $props['response'][$name] = (string)$value;
+        return $props;
+    }
+
+    private function parseAttributes(\SimpleXMLElement $xml) {
+        $props = [];
+
+        foreach ($xml->attributes() as $name => $value) {
+            $props[strtolower($name)] = (string)$value;
         }
 
         return $props;

@@ -29,7 +29,7 @@ class PaymentResponse extends AbstractResponse
         $props = [];
 
         foreach ($xml->attributes() as $name => $value) {
-            $props[strtolower($name)] = $value;
+            $props[strtolower($name)] = (string)$value;
         }
 
         return $props;
