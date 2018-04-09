@@ -41,13 +41,13 @@ abstract class AbstractResponse
      */
     public function verify()
     {
-        $data = strrev(
-            (string)$this->xml->bank_sign
+        $signature = strrev(
+            base64_decode((string)$this->xml->bank_sign, true)
         );
 
-        $signature = sha1($this->xml->bank->saveXML());
+        $data = $this->xml->bank->saveXML();
 
-        return $this->certManager->verify($data, $signature);
+        return $this->certManager->verify($data, $signature, true);
     }
 
     /**
