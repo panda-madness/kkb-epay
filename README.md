@@ -21,6 +21,7 @@ $epay = new \KkbEpay\Epay([
     'PRIVATE_KEY_FN' => './epay/cert.prv',
     'PRIVATE_KEY_PASS' => '1q2w3e4r',
     'PUBLIC_KEY_FN' => './epay/cert.cer',
+    'BANK_PUBLIC_KEY_FN' => './epay/kkbca.pub',
     'MERCHANT_ID' => '12345678',
 ]);
 
