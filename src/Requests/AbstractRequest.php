@@ -7,8 +7,11 @@ use KkbEpay\SSL\CertManager;
 
 abstract class AbstractRequest
 {
-    /** @var array $params */
-    protected $params;
+    /** @var array $clientOptions */
+    protected $clientOptions;
+
+    /** @var array $requestParams */
+    protected $requestParams;
 
     /** @var \SimpleXMLElement $xml */
     protected $xml;
@@ -18,14 +21,15 @@ abstract class AbstractRequest
      */
     protected $certManager;
 
-    public function __construct(array $params, CertManager $certManager)
+    public function __construct($clientOptions, $requestParams, CertManager $certManager)
     {
-        $this->params = $params;
         $this->certManager = $certManager;
+        $this->clientOptions = $clientOptions;
+        $this->requestParams = $requestParams;
         $this->xml = $this->buildXML();
     }
 
-    public function getXML() {
+    protected function getXML() {
         $this->signXML();
         return trim(
             preg_replace('/^.+\n/', '', $this->xml->saveXML())
@@ -45,8 +49,10 @@ abstract class AbstractRequest
         $merchantSign = $this->xml->addChild('merchant_sign', $signature);
 
         $merchantSign->addAttribute('type', 'RSA');
-        $merchantSign->addAttribute('cert_id', $this->params['MERCHANT_CERTIFICATE_ID']);
+        $merchantSign->addAttribute('cert_id', $this->clientOptions['MERCHANT_CERTIFICATE_ID']);
     }
 
-    abstract public function buildXML();
+    abstract protected function buildXML();
+
+    abstract public function getContents();
 }

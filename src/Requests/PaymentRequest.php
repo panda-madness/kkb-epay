@@ -10,20 +10,20 @@ class PaymentRequest extends AbstractRequest
         $document = new \SimpleXMLElement('<document />');
 
         $merchant = $document->addChild('merchant', null);
-        $merchant->addAttribute('cert_id', $this->params['MERCHANT_CERTIFICATE_ID']);
-        $merchant->addAttribute('name', $this->params['MERCHANT_NAME']);
+        $merchant->addAttribute('cert_id', $this->clientOptions['MERCHANT_CERTIFICATE_ID']);
+        $merchant->addAttribute('name', $this->clientOptions['MERCHANT_NAME']);
 
         $order = $merchant->addChild('order');
-        $order->addAttribute('order_id', sprintf('%06d', $this->params['order_id']));
-        $order->addAttribute('amount', $this->params['amount']);
-        $order->addAttribute('currency', $this->params['currency']);
+        $order->addAttribute('order_id', sprintf('%06d', $this->requestParams['order_id']));
+        $order->addAttribute('amount', $this->requestParams['amount']);
+        $order->addAttribute('currency', $this->requestParams['currency']);
 
         $department = $order->addChild('department');
-        $department->addAttribute('merchant_id', $this->params['MERCHANT_ID']);
-        $department->addAttribute('amount', $this->params['amount']);
+        $department->addAttribute('merchant_id', $this->clientOptions['MERCHANT_ID']);
+        $department->addAttribute('amount', $this->requestParams['amount']);
 
         if(isset($this->params['fields'])) {
-            foreach ($this->params['fields'] as $field => $value) {
+            foreach ($this->requestParams['fields'] as $field => $value) {
                 $department->addAttribute($field, $value);
             }
         }
@@ -31,11 +31,14 @@ class PaymentRequest extends AbstractRequest
         return $document;
     }
 
-    public function getXML()
+    public function getContents()
     {
-        $this->signXML();
-        $xml = preg_replace('/^.+\n/', '', $this->xml->saveXML());
-
-        return base64_encode($xml);
+        return [
+            'Signed_Order_B64' => base64_encode($this->getXML()),
+            'Backlink' => $this->requestParams['links']['BackLink'],
+            'FailureBacklink' => $this->requestParams['links']['FailureBackLink'],
+            'PostLink' => $this->requestParams['links']['PostLink'],
+            'FailurePostLink' => $this->requestParams['links']['FailurePostLink'],
+        ];
     }
 }

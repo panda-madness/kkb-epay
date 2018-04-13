@@ -25,7 +25,8 @@ class StatusResponse extends AbstractResponse
         return $props;
     }
 
-    private function parseAttributes(\SimpleXMLElement $xml) {
+    private function parseAttributes(\SimpleXMLElement $xml): array
+    {
         $props = [];
 
         foreach ($xml->attributes() as $name => $value) {

@@ -12,18 +12,18 @@ class ResponseFactory
     /**
      * @param string $type
      * @param $body
-     * @param \KkbEpay\SSL\CertManager $signer
+     * @param \KkbEpay\SSL\CertManager $certManager
      * @return \KkbEpay\Responses\AbstractResponse
      */
-    public static function create(string $type, $body, CertManager $signer) : AbstractResponse {
+    public static function create(string $type, $body, CertManager $certManager) : AbstractResponse {
         $request = false;
 
         switch ($type) {
             case 'payment':
-                $request = new PaymentResponse($body, $signer);
+                $request = new PaymentResponse($body, $certManager);
                 break;
             case 'status':
-                $request = new StatusResponse($body, $signer);
+                $request = new StatusResponse($body, $certManager);
                 break;
             case 'remote':
                 break;

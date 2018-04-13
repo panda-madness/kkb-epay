@@ -9,20 +9,20 @@ use KkbEpay\SSL\CertManager;
 
 class Epay
 {
-    protected $params;
+    protected $options;
 
-    protected $signer;
+    protected $certManager;
 
-    public function __construct($params = [])
+    public function __construct(array $options = [])
     {
-        $this->params = $params;
+        $this->options = $options;
 
-        $this->certManager = new CertManager($params);
+        $this->certManager = new CertManager($options);
     }
 
-    public function buildRequest(string $type, array $params)
+    public function buildRequest(string $type, array $requestParams)
     {
-        return RequestFactory::create($type, array_merge($params, $this->params), $this->certManager)->getXML();
+        return RequestFactory::create($type, $this->options, $requestParams, $this->certManager);
     }
 
     public function parseResponse(string $type, string $body)
