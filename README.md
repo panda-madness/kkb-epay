@@ -33,6 +33,12 @@ $request = $epay->buildRequest('payment', [
         'RL' => 1234567,
         'abonent_id' => 1234567,
         ...
+    ],
+    'links' => [
+        'BackLink' => '...',
+        'FailureBackLink' => '...',
+        'PostLink' => '...',
+        'FailurePostLink' => '...',
     ]
 ]);
 
