@@ -35,8 +35,8 @@ class PaymentRequest extends AbstractRequest
     {
         return [
             'Signed_Order_B64' => base64_encode($this->getXML()),
-            'Backlink' => $this->requestParams['links']['BackLink'],
-            'FailureBacklink' => $this->requestParams['links']['FailureBackLink'],
+            'BackLink' => $this->requestParams['links']['BackLink'],
+            'FailureBackLink' => $this->requestParams['links']['FailureBackLink'],
             'PostLink' => $this->requestParams['links']['PostLink'],
             'FailurePostLink' => $this->requestParams['links']['FailurePostLink'],
         ];

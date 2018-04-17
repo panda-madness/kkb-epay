@@ -32,6 +32,6 @@ class Epay
 
     public function getConfig()
     {
-        return $this->params;
+        return $this->options;
     }
 }
