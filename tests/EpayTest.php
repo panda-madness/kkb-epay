@@ -15,7 +15,7 @@ class EpayTest extends \PHPUnit\Framework\TestCase
 
     public function testInitializeEpay()
     {
-        $epay = new Epay(parse_ini_file('test-certs/config.ini'));
+        $epay = new Epay($this->data['config']);
 
         $this->assertInstanceOf(Epay::class, $epay);
 
@@ -29,7 +29,7 @@ class EpayTest extends \PHPUnit\Framework\TestCase
     public function testBuildPaymentRequest(Epay $epay)
     {
         $request = $epay->buildRequest('payment', [
-            'order_id' => 1234,
+            'order_id' => 64085,
             'amount' => 1000,
             'currency' => 398,
             'links' => [
@@ -58,7 +58,7 @@ class EpayTest extends \PHPUnit\Framework\TestCase
     public function testBuildStatusRequest(Epay $epay)
     {
         $request = $epay->buildRequest('status', [
-            'order_id' => 1234
+            'order_id' => 64085
         ]);
 
         $this->assertInstanceOf(\KkbEpay\Requests\StatusRequest::class, $request);
@@ -97,5 +97,11 @@ class EpayTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\KkbEpay\Responses\PaymentResponse::class, $response);
         $this->assertTrue($response->verify());
+
+        $contents = $response->get();
+
+        $this->assertArrayHasKey('result', $contents);
+        $this->assertArrayHasKey('payment', $contents);
+        $this->assertArrayHasKey('order', $contents);
     }
 }
