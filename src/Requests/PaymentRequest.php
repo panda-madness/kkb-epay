@@ -22,7 +22,7 @@ class PaymentRequest extends AbstractRequest
         $department->addAttribute('merchant_id', $this->clientOptions['MERCHANT_ID']);
         $department->addAttribute('amount', $this->requestParams['amount']);
 
-        if(isset($this->params['fields'])) {
+        if(isset($this->requestParams['fields'])) {
             foreach ($this->requestParams['fields'] as $field => $value) {
                 $department->addAttribute($field, $value);
             }
